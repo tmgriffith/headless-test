@@ -92,7 +92,7 @@ function callPuppeteer(){
   slowMo: 50 // slow down by 250ms
 });
   const page = await browser.newPage();
-  await page.goto( 'https://capricorncrew.go2cloud.org/aff_c?offer_id=597&aff_id=1047&aff_sub={clickid}&aff_sub2={var2}&aff_sub3={var1}&aff_sub4={var5}&aff_sub5={var8}' );
+  await page.goto( 'https://capricorncrew.go2cloud.org/aff_c?offer_id=597&aff_id=1001&aff_sub={clickid}&aff_sub2={var2}&aff_sub3={var1}&aff_sub4={var5}&aff_sub5={var8}' );
 
   await page.type( 'input[name=firstName]', postBody1.firstName );
   await page.type( 'input[name=lastName]', postBody1.lastName );

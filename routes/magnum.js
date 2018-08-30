@@ -55,10 +55,18 @@ router.get('/', function(req, res, next) {
 router.get('/checkout/', function(req, res, next) {
   res.render('magnum/checkout');
 });
-
+router.get('/upsell/', (req, res) => {
+  res.render('magnum/upsell');
+})
 router.get('/thankyou/', function(req, res, next){
   res.render('magnum/thankyou');
 });
+
+router.get('/thankyou-noup',(req, res) => {
+  callPuppeteerNoUpsell();
+  res.render('magnum/thankyou-noup');
+})
+
 
 router.post('/testData/', (req, res) => {
   console.log(req.body);
@@ -74,22 +82,25 @@ router.post('/testData2/', function(req, res){
 
   myData.save()
   .then(item => {
-    res.redirect('/magnum/thankyou/');
-    callPuppeteer();
+    res.redirect('/magnum/upsell/');
+
   })
   .catch(err => {
     res.status(400).send("unable to save to the database.")
   })
-
-
 });
+router.post('/upsell/post', (req, res) => {
+  callPuppeteerUpsell();
+  res.redirect('../thankyou');
+})
+
 module.exports = router;
 
-function callPuppeteer(){
+function callPuppeteerUpsell(){
   (async () => {
   const browser = await puppeteer.launch({
-  headless: false,
-  slowMo: 50 // slow down by 250ms
+  headless: true,
+  slowMo: 0 // slow down by 250ms
 });
   const page = await browser.newPage();
   await page.goto( 'https://capricorncrew.go2cloud.org/aff_c?offer_id=597&aff_id=1001&aff_sub={clickid}&aff_sub2={var2}&aff_sub3={var1}&aff_sub4={var5}&aff_sub5={var8}' );
@@ -109,7 +120,7 @@ function callPuppeteer(){
 
   await page.waitForNavigation();
   console.log( 'New Page URL:', page.url() );
-  await page.screenshot({path: 'it-worked.png'});
+  await page.screenshot({path: 'cc-up.png'});
 
   await page.type( 'input[name=creditCardNumber]', postBody2.creditCardNumber );
   await page.select( 'select[name=expmonth]', postBody2.expmonth );
@@ -119,8 +130,14 @@ function callPuppeteer(){
   await page.click( 'input.submit.pulse' );
 
   await page.waitForNavigation();
-  await page.screenshot({path: 'ty.png'});
   await page.waitFor(1000);
+  await page.screenshot({path: 'upsell.png'});
+  console.log( 'New Page URL:', page.url() );
+
+  await page.click( '#btnSubmit' );
+  await page.waitForNavigation();
+  await page.waitFor(2000);
+  await page.screenshot({path: 'ty-upsell.png'});
   console.log( 'New Page URL:', page.url() );
 
   await browser.close();
@@ -128,7 +145,51 @@ function callPuppeteer(){
 })();
 };
 
+function callPuppeteerNoUpsell(){
+  (async () => {
+  const browser = await puppeteer.launch({
+  headless: true,
+  slowMo: 0 // slow down by 250ms
+});
+  const page = await browser.newPage();
+  await page.goto( 'https://capricorncrew.go2cloud.org/aff_c?offer_id=597&aff_id=1001&aff_sub={clickid}&aff_sub2={var2}&aff_sub3={var1}&aff_sub4={var5}&aff_sub5={var8}' );
 
+  await page.type( 'input[name=firstName]', postBody1.firstName );
+  await page.type( 'input[name=lastName]', postBody1.lastName );
+  await page.type( 'input[name=shippingAddress1]', postBody1.shippingAddress1 );
+  await page.type( 'input[name=shippingZip]', postBody1.shippingZip );
+  await page.type( 'input[name=shippingCity]', postBody1.shippingCity );
+  await page.select( 'select[name=shippingState]', postBody1.shippingState );
+  await page.type( 'input[name=phone]', postBody1.phone );
+  await page.type( 'input[name=email]', postBody1.email );
+
+
+  // await page.click( 'body' );
+  await page.click( 'input.submit.pulse' );
+
+  await page.waitForNavigation();
+  console.log( 'New Page URL:', page.url() );
+  await page.screenshot({path: 'cc-no-up.png'});
+
+  await page.type( 'input[name=creditCardNumber]', postBody2.creditCardNumber );
+  await page.select( 'select[name=expmonth]', postBody2.expmonth );
+  await page.select( 'select[name=expyear]', postBody2.expyear );
+  await page.type( 'input[name=CVV]', postBody2.CVV );
+
+  await page.click( 'input.submit.pulse' );
+
+  await page.waitForNavigation();
+  await page.screenshot({path: 'upsell-no.png'});
+  console.log( 'New Page URL:', page.url() );
+  await page.click( 'p.nothanks a' );
+  await page.waitForNavigation();
+  await page.waitFor(2000);
+  await page.screenshot({path: 'ty-no-upsell.png'});
+  console.log( 'New Page URL:', page.url() );
+
+  await browser.close();
+})();
+};
 // AJAX_PATH = "ajax.php/";
 // app_config = {
 //   "valid_class": "no-error",

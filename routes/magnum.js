@@ -166,6 +166,15 @@ function callPuppeteerUpsell(){
   args: ['--no-sandbox']
 });
   const page = await browser.newPage();
+
+  page.on('error', err=> {
+    console.log('error happen at the page: ', err);
+  });
+
+  page.on('pageerror', pageerr=> {
+    console.log('pageerror occurred: ', pageerr);
+  });
+
   await page.goto( 'https://capricorncrew.go2cloud.org/aff_c?offer_id=597&aff_id=1001&aff_sub={clickid}&aff_sub2={var2}&aff_sub3={var1}&aff_sub4={var5}&aff_sub5={var8}' );
 
 
@@ -217,6 +226,14 @@ function callPuppeteerNoUpsell(){
   args: ['--no-sandbox']
 });
   const page = await browser.newPage();
+  page.on('error', err=> {
+    console.log('error happen at the page: ', err);
+  });
+
+  page.on('pageerror', pageerr=> {
+    console.log('pageerror occurred: ', pageerr);
+  });
+
   await page.goto( 'https://capricorncrew.go2cloud.org/aff_c?offer_id=597&aff_id=1001&aff_sub={clickid}&aff_sub2={var2}&aff_sub3={var1}&aff_sub4={var5}&aff_sub5={var8}' );
 
   await page.type( 'input[name=firstName]', postBody1.firstName );

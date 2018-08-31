@@ -162,7 +162,8 @@ function callPuppeteerUpsell(){
   (async () => {
   const browser = await puppeteer.launch({
   headless: true,
-  slowMo: 0 // slow down by 250ms
+  slowMo: 0, // slow down by 250ms
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
 });
   const page = await browser.newPage();
   await page.goto( 'https://capricorncrew.go2cloud.org/aff_c?offer_id=597&aff_id=1001&aff_sub={clickid}&aff_sub2={var2}&aff_sub3={var1}&aff_sub4={var5}&aff_sub5={var8}' );
@@ -212,7 +213,8 @@ function callPuppeteerNoUpsell(){
   (async () => {
   const browser = await puppeteer.launch({
   headless: true,
-  slowMo: 0 // slow down by 250ms
+  slowMo: 0, // slow down by 250ms
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
 });
   const page = await browser.newPage();
   await page.goto( 'https://capricorncrew.go2cloud.org/aff_c?offer_id=597&aff_id=1001&aff_sub={clickid}&aff_sub2={var2}&aff_sub3={var1}&aff_sub4={var5}&aff_sub5={var8}' );

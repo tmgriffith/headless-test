@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
-// var mongoose = require('mongoose');
-// var db = require('../data/index.js');
-// var fs = require('fs');
-
+var device = require('device');
 var puppeteer = require('puppeteer');
 var postBody1;
 var postBody2;
 var file = '../data.txt';
+var query;
+
+var isMobile = false;
 /* GET magnum page. */
 
 var mongoose = require('mongoose');
@@ -49,9 +49,20 @@ var Data = mongoose.model("Data", dataSchema);
 
 
 router.get('/', function(req, res, next) {
-  res.render('magnum/index');
+  var userDevice = device(req.headers['user-agent'])
+  // query = req.url.split('?')[1];
+  if (!userDevice.is('desktop')) {
+    res.redirect('/magnum/mobile/main');
+  } else{
+    res.render('magnum/index');
+  }
+  console.log("Desktop: ", userDevice.is('desktop'))
+  console.log("Mobile: ", userDevice.is('phone'))
+  console.log("bot: ", userDevice.is('bot'))
+  console.log("TV: ", userDevice.is('tv'))
+  console.log("tablet: ", userDevice.is('tablet'))
 });
-
+/* Desktop Routes */
 router.get('/checkout/', function(req, res, next) {
   res.render('magnum/checkout');
 });
@@ -67,7 +78,7 @@ router.get('/thankyou-noup',(req, res) => {
   res.render('magnum/thankyou-noup');
 })
 
-
+/* Desktop Post Routes */
 router.post('/testData/', (req, res) => {
   console.log(req.body);
   postBody1 = req.body;
@@ -94,6 +105,57 @@ router.post('/upsell/post', (req, res) => {
   res.redirect('../thankyou');
 })
 
+/* Mobile Routes */
+router.get('/mobile/main', (req, res) => {
+  res.render('magnum/mobile/main');
+})
+router.get('/mobile/name', (req, res) => {
+  res.render('magnum/mobile/name');
+})
+router.get('/mobile/address', (req, res) => {
+  res.render('magnum/mobile/address');
+})
+router.get('/mobile/checkout', (req, res) => {
+  res.render('magnum/mobile/checkout');
+})
+router.get('/mobile/upsell', (req, res) => {
+  res.render('magnum/mobile/upsell');
+})
+router.get('/mobile/thankyou-up', (req, res) => {
+  res.render('magnum/mobile/thankyou-up');
+})
+router.get('/mobile/thankyou-noup', (req, res) => {
+  callPuppeteerNoUpsell();
+  res.render('magnum/mobile/thankyou-noup');
+})
+
+/* Mobile Post Routes */
+router.post('/mobile/post/name', (req, res) => {
+  res.redirect('/magnum/mobile/address')
+})
+router.post('/mobile/post/address', (req, res) => {
+  postBody1 = req.body;
+  res.redirect('/magnum/mobile/checkout')
+})
+router.post('/mobile/post/checkout', (req, res) => {
+  postBody2 = req.body;
+  var mergePostData = {...postBody1, ...postBody2}
+  var myData = new Data(mergePostData);
+
+  myData.save()
+  .then(item => {
+    res.redirect('/magnum/mobile/upsell')
+
+  })
+  .catch(err => {
+    res.status(400).send("unable to save to the database.")
+  })
+
+})
+router.post('/mobile/post/upsell', (req, res) => {
+  callPuppeteerUpsell();
+  res.redirect('/magnum/mobile/thankyou-up')
+})
 module.exports = router;
 
 function callPuppeteerUpsell(){
@@ -104,6 +166,7 @@ function callPuppeteerUpsell(){
 });
   const page = await browser.newPage();
   await page.goto( 'https://capricorncrew.go2cloud.org/aff_c?offer_id=597&aff_id=1001&aff_sub={clickid}&aff_sub2={var2}&aff_sub3={var1}&aff_sub4={var5}&aff_sub5={var8}' );
+
 
   await page.type( 'input[name=firstName]', postBody1.firstName );
   await page.type( 'input[name=lastName]', postBody1.lastName );

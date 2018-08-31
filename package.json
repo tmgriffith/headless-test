@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start-dev": "nodemon ./bin/www",
-    "start-prod": ""
+    "dev": "nodemon ./bin/www",
+    "prod": ""
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
+    "device": "^0.3.9",
     "express": "^4.16.3",
     "express-validator": "^5.3.0",
     "forever": "^0.15.3",

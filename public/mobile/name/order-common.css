@@ -1,0 +1,243 @@
+/* COMMON STYLES */
+
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+.clear {
+    clear: both;
+}
+.hidden {
+    display: none;
+}
+.hideText {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.rounded8top {
+    -moz-border-radius: 8px 8px 0 0;
+    -webkit-border-radius: 8px 8px 0 0;
+    -khtml-border-radius: 8px 8px 0 0;
+    border-radius: 8px 8px 0 0;
+}
+.rounded10 {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+}
+.shadow {
+    -moz-box-shadow:    0px 0px 3px 1px #ddd;
+    -webkit-box-shadow: 0px 0px 3px 1px #ddd;
+    box-shadow:         0px 0px 3px 1px #ddd;
+}
+.spinner {
+    width: 100%;
+    height: 120px;
+    background: url('../images/spinner.gif') center center no-repeat;
+}
+#noticeBar {
+    text-align: center;
+    font-size: 18px;
+    background-color: #333;
+    font-weight: bold;
+    color: #ccc;
+    padding: 10px 0;
+}
+#cvvTip {
+    font-family: Arial, Helvetica, sans-serif;
+}
+#cvvTip h3 {
+    font-weight: bold;
+    font-size: 12px;
+    color: #333;
+}
+#cvvTip p {
+    font-size: 12px;
+    color: #333;
+    padding: 10px 0;
+}
+.footer {
+    margin: 0px auto;
+    padding-top: 0px;
+    padding-bottom: 6px;
+    width: 100%;
+    max-width: none;
+    font-size: 12px;
+    text-align: center;
+    color: #887070;
+}
+.footer ul {
+    margin: 0;
+    padding: 0;
+}
+.footer ul li {
+    float: none;
+    display: inline;
+    margin: 0;
+    padding: 0 2px;
+    font-weight: normal;
+    font-size: 17px;
+    color: #887070;
+    line-height: 17px;
+}
+.footer a {
+    background: none;
+    width: auto;
+    height: auto;
+    display: inline;
+    text-transform: capitalize;
+    font-weight: normal;
+    color: #887070;
+    text-decoration: none;
+    font-size: 17px;
+    font-family: 'Open Sans', sans-serif;
+}
+.footer p {
+    text-align: center;
+    padding: 0;
+    padding-top: 0px;
+    line-height: normal;
+    font-size: 16px;
+    margin: 5px;
+}
+.footer p:last-child{
+
+}
+/* FORM STYLES */
+form .fields {
+    ;
+}
+form .fields .label {
+
+}
+form .fields .input input {
+    line-height: normal;
+    color: #000;
+}
+form .fields .input select {
+   line-height: normal;
+   color: #000;
+}
+form .fields .input input.error {
+    border: 1px solid orange;
+    background: url('../images/error-input.png') center right no-repeat #fff;
+}
+form .fields .input select.error {
+    border: 1px solid orange;
+/*    background: url('../images/error-select.png') center right no-repeat #fff;*/
+}
+form .fields .input input.valid {
+    border: 1px solid green;
+    background: url('../images/tick-input.png') no-repeat center right #fff;
+}
+form .fields .input select.valid {
+    border: 1px solid green;
+    background: url('../images/tick-select.png') no-repeat center right #fff;
+}
+form .fields .spacer {
+    height: 0px;
+    font-size: 0;
+    line-height: 0;
+}
+
+form .methods {
+	text-align: center;
+}
+form .cards {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+	display:inline-block;
+}
+
+form .cards li {
+	-webkit-transition: all .2s;
+	-moz-transition: all .2s;
+	-ms-transition: all .2s;
+	-o-transition: all .2s;
+	transition: all .2s;
+	background-image: url('../images/cards-curved-32px.png');
+	background-position: 0 0;
+    float: left;
+    height: 32px;
+    margin-right: 8px;
+    text-indent: -9999px;
+	width: 51px
+}
+form .cards li:last-child {
+	margin-right: 0
+}
+form .cards .visa.off {
+	background-position: 0 32px
+}
+form .cards .visa_electron {
+	background-position: 255px 0
+}
+form .cards .visa_electron.off {
+	background-position: 255px 32px
+}
+form .cards .mastercard {
+	background-position: 204px 0
+}
+form .cards .mastercard.off {
+	background-position: 204px 32px
+}
+form .cards .maestro {
+	background-position: 153px 0
+}
+form .cards .maestro.off {
+	background-position: 153px 32px
+}
+form .cards .discover {
+	background-position: 102px 0
+}
+form .cards .discover.off {
+	background-position: 102px 32px
+}
+form .cards .amex {
+	background-position: 51px 0
+}
+form .cards .amex.off {
+	background-position: 51px 32px
+}
+form .fields .input select[name=cc_year],
+form .fields .input select[name=cc_month] {
+
+}
+form .fields .input input[name=cc_cvv] {
+
+}
+form .fields a.cvvTip {
+
+}
+
+form .terms {
+    padding-bottom: 20px;
+}
+form .terms .question {
+    font-size: 17px;
+    color: #333;
+    text-align: center;
+}
+form .terms .question input {
+    margin-right: 5px;
+    margin-left: 10px;
+}
+form .terms .term {
+    font-size: 12px;
+    color: #333;
+}
+form .terms .term input {
+    margin-right: 3px;
+    margin-left: 5px;
+    margin-top: 1px;
+    vertical-align: top;
+}
+form .button {
+    text-align: center;
+}

@@ -41,7 +41,39 @@
                      We hope you enjoy the benefits of Magnum Pump <br>
                      Your order is scheduled to arrive by
                      <span style="color: #be0702; font-weight:700;">
-                        <!-- September 04, 2018 -->Tuesday, September 04 2018                     </span>
+                       <script language="Javascript">
+                      function dateNumber(){
+                       if ((now.getDate() + 5) > 31){
+                         var date = (now.getDate() +5) - 31;
+                         return date;
+                       } else {
+                         return now.getDate();
+                       }
+                     }
+                     function dateMonth(){
+                       if ((now.getDate() + 5) > 31){
+                         var month = now.getMonth() + 1;
+                         return month
+                       } else {
+                         return now.getMonth();
+                       }
+                     }
+                  <!--
+                  // Array of day names
+                  var dayNames = new Array("Sunday","Monday","Tuesday","Wednesday",
+                  "Thursday","Friday","Saturday","Sunday","Monday","Tuesday","Wednesday",
+                  "Thursday","Friday","Saturday");
+                  // Array of month Names
+                  var monthNames = new Array(
+                  "January","February","March","April","May","June","July",
+                  "August","September","October","November","December","January");
+                  var now = new Date();
+                  document.write(dayNames[now.getDay() + 5] + ", " +
+                  monthNames[dateMonth()] + " " +
+                  dateNumber() + ", " + now.getFullYear());
+                  // -->
+                  </script>
+                 </span>
                   </p>
                   <div class="clearall"></div>
                   <hr>
@@ -49,7 +81,22 @@
                   <p class="thnk-order-p2">
                      Order Placed:
                      <span>
-                        August 30, 2018                     </span>
+                       <script language="Javascript">
+                   <!--
+                   // Array of day names
+                   var dayNames = new Array("Sunday","Monday","Tuesday","Wednesday",
+                   "Thursday","Friday","Saturday");
+                   // Array of month Names
+                   var monthNames = new Array(
+                   "January","February","March","April","May","June","July",
+                   "August","September","October","November","December");
+                   var now = new Date();
+                   document.write(dayNames[now.getDay()] + ", " +
+                   monthNames[now.getMonth()] + " " +
+                   now.getDate() + ", " + now.getFullYear());
+                   // -->
+                   </script>
+                                   </span>
                      <br>Order Number: 73F69E5016                       <span></span><br>Items Ordered:2                  </p>
                   <div class="thank-middle">
                      <img src="/thankyou/up-btl.png" class="btl">
